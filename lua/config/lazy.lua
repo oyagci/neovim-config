@@ -139,6 +139,9 @@ require("lazy").setup({
 			---@module "ibl"
 			---@type ibl.config
 			opts = {},
+			config = function ()
+				require("ibl").setup()
+			end
 		},
 		{
 			"ray-x/lsp_signature.nvim",
@@ -241,36 +244,46 @@ require("lazy").setup({
 		},
 		{
 			"leoluz/nvim-dap-go",
+			dependencies = {
+				"mfussenegger/nvim-dap",
+			},
 			config = function ()
 				require("dap-go").setup()
 			end
 		},
+		{
+			"nvim-neotest/neotest",
+			dependencies = {
+				"ChristianChiarulli/neovim-codicons",
+				"nvim-neotest/nvim-nio",
+				"nvim-lua/plenary.nvim",
+				"antoinemadec/FixCursorHold.nvim",
+				"nvim-treesitter/nvim-treesitter",
+				"fredrikaverpil/neotest-golang",
+			},
+			config = function()
+				require("neotest").setup({
+					adapters = {
+						-- require("neotest-golang"), -- Registration
+						require("neotest-golang")({ go_test_args = {
+							"-v",
+							"-coverprofile=" .. vim.fn.getcwd() .. "/coverage.out"
+						}})
+					},
+				})
+			end,
+		},
+		{
+			"andythigpen/nvim-coverage",
+			dependencies = "nvim-lua/plenary.nvim",
+			config = function()
+				require("coverage").setup()
+			end,
+		}
 	},
 })
 
 require("options")
 require("keymaps")
 require("autocmds")
-
-local dap = require("dap")
-local dapui = require("dapui")
-
-dap.listeners.after.event_initialized["dapui_config"] = function()
-    dapui.open()
-end
-dap.listeners.before.event_terminated["dapui_config"] = function()
-    dapui.close()
-end
-dap.listeners.before.event_exited["dapui_config"] = function()
-    dapui.close()
-end
-
-vim.keymap.set("n", "<F5>", function() dap.continue() end, { noremap = true, silent = true })
-vim.keymap.set("n", "<F10>", function() dap.step_over() end, { noremap = true, silent = true })
-vim.keymap.set("n", "<F11>", function() dap.step_into() end, { noremap = true, silent = true })
-vim.keymap.set("n", "<F12>", function() dap.step_out() end, { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>b", function() dap.toggle_breakpoint() end, { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>B", function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>lp", function() dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end, { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>dr", function() dap.repl.open() end, { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>dl", function() dap.run_last() end, { noremap = true, silent = true })
+require("dapconf")

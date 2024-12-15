@@ -33,3 +33,43 @@ vim.keymap.set("n", "<leader>o", function()
     vim.cmd("!isort %")
     vim.cmd("edit") -- Reload the buffer to reflect changes
 end, { noremap = true, silent = true })
+
+
+vim.keymap.set("n", "<leader>cc", function()
+    require("coverage").load()
+end, { noremap = true, silent = true, desc = "Load coverage" })
+
+vim.keymap.set("n", "<leader>ct", function()
+    require("coverage").toggle()
+end, { noremap = true, silent = true, desc = "Toggle coverage view" })
+
+vim.keymap.set("n", "<leader>cs", function()
+    require("coverage").summary()
+end, { noremap = true, silent = true, desc = "Show coverage summary" })
+
+
+vim.keymap.set("n", "<leader>tt", function()
+    require("neotest").run.run()
+end, { noremap = true, silent = true, desc = "Run nearest test" })
+
+vim.keymap.set("n", "<leader>tf", function()
+    require("neotest").run.run(vim.fn.expand("%"))
+end, { noremap = true, silent = true, desc = "Run tests in file" })
+
+vim.keymap.set("n", "<leader>ts", function()
+    require("neotest").summary.toggle()
+end, { noremap = true, silent = true, desc = "Toggle test summary" })
+
+vim.keymap.set("n", "<leader>to", function()
+    require("neotest").output.open({ enter = true })
+end, { noremap = true, silent = true, desc = "Open test output" })
+
+-- Keymap to jump to the next error
+vim.keymap.set("n", "<leader>dn", function()
+    vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+end, { noremap = true, silent = true, desc = "Go to next error" })
+
+-- Keymap to jump to the previous error
+vim.keymap.set("n", "<leader>dp", function()
+    vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
+end, { noremap = true, silent = true, desc = "Go to previous error" })
