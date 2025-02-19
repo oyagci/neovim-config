@@ -7,6 +7,8 @@ vim.keymap.set("n", "<C-\\>", ":TagbarToggle<CR>")
 -- Remove highlight
 vim.keymap.set("n", "<C-c>", ":nohl<CR>")
 
+vim.keymap.set("n", "<leader>jt", ":GoTagsAddJSON<CR>")
+
 -- LSP
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)          -- Go to definition
 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)          -- Find references

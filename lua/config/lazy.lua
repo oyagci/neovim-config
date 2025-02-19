@@ -123,6 +123,7 @@ require("lazy").setup({
 		{ "ctrlpvim/ctrlp.vim" },
 		{ "preservim/nerdtree" },
 		{ "hiphish/rainbow-delimiters.nvim" },
+		{ "Xuyuanp/nerdtree-git-plugin" },
 		{
 			"junegunn/fzf",
 			build = function()
@@ -259,16 +260,17 @@ require("lazy").setup({
 				"nvim-lua/plenary.nvim",
 				"antoinemadec/FixCursorHold.nvim",
 				"nvim-treesitter/nvim-treesitter",
-				"fredrikaverpil/neotest-golang",
+				{ "fredrikaverpil/neotest-golang", version = "*" },
 			},
 			config = function()
 				require("neotest").setup({
 					adapters = {
-						-- require("neotest-golang"), -- Registration
-						require("neotest-golang")({ go_test_args = {
-							"-v",
-							"-coverprofile=" .. vim.fn.getcwd() .. "/coverage.out"
-						}})
+						{
+							require("neotest-golang")({ go_test_args = {
+								"-v",
+								"-coverprofile=" .. vim.fn.getcwd() .. "/coverage.out"
+							}})
+						},
 					},
 				})
 			end,
@@ -279,6 +281,71 @@ require("lazy").setup({
 			config = function()
 				require("coverage").setup()
 			end,
+		},
+		{
+			"devkvlt/go-tags.nvim",
+			dependencies = { 'nvim-treesitter/nvim-treesitter' },
+			config = function()
+				require('go-tags').setup({
+					commands = {
+						['GoTagsAddJSON'] = { '-add-tags', 'json' },
+						['GoTagsRemoveJSON'] = { '-remove-tags', 'json' },
+					},
+				})
+			end
+		},
+		{
+			"nvim-neotest/neotest",
+			dependencies = { 'nvim-neotest/neotest-go' },
+			config = function()
+				local neotest_ns = vim.api.nvim_create_namespace("neotest")
+				vim.diagnostic.config({
+					virtual_test = {
+						format = function(diagnostic)
+							local message = diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+							return message
+						end
+					},
+				}, neotest_ns)
+
+				require("neotest").setup({
+					adapters = {
+						require("neotest-go"),
+					},
+				})
+			end
+		},
+		{
+		  "NeogitOrg/neogit",
+			dependencies = {
+				"nvim-lua/plenary.nvim",         -- required
+				"sindrets/diffview.nvim",        -- optional - Diff integration
+				"ibhagwan/fzf-lua",              -- optional
+			},
+		},
+		{
+			"johmsalas/text-case.nvim",
+			dependencies = { "nvim-telescope/telescope.nvim" },
+			config = function()
+				require("textcase").setup({})
+				require("telescope").load_extension("textcase")
+			end,
+			keys = {
+				"ga", -- Default invocation prefix
+				{ "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "x" }, desc = "Telescope" },
+			},
+			cmd = {
+				-- NOTE: The Subs command name can be customized via the option "substitude_command_name"
+				"Subs",
+				"TextCaseOpenTelescope",
+				"TextCaseOpenTelescopeQuickChange",
+				"TextCaseOpenTelescopeLSPChange",
+				"TextCaseStartReplacingCommand",
+			},
+			-- If you want to use the interactive feature of the `Subs` command right away, text-case.nvim
+			-- has to be loaded on startup. Otherwise, the interactive feature of the `Subs` will only be
+			-- available after the first executing of it or after a keymap of text-case.nvim has been used.
+			lazy = false,
 		}
 	},
 })
