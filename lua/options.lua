@@ -8,7 +8,7 @@ vim.opt.sw = 2
 vim.opt.hlsearch = true
 
 vim.opt.undofile = true
-vim.opt.undodir = "/Users/oguzhan/.vimundo/"
+vim.opt.undodir = "/Users/oyagci/.vimundo/"
 
 vim.cmd[[colorscheme tokyonight]]
 vim.g.ctrlp_extensions = {'buffertag', 'tag', 'line', 'dir'}

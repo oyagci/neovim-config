@@ -40,6 +40,7 @@ require("lazy").setup({
 						},
 					},
 				})
+				lspconfig.ts_ls.setup({})
 			end,
 		},
 		{
@@ -240,7 +241,7 @@ require("lazy").setup({
 			},
 			config = function ()
 				local dap = require("dap-python")
-				dap.setup("/Users/oguzhan/.venv/bin/python")
+				dap.setup("/Users/oyagci/.venv/bin/python")
 			end
 		},
 		{
