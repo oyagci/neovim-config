@@ -19,7 +19,7 @@ vim.g.mapleader = ";"
 vim.g.maplocalleader = "\\"
 
 -- Use a protected call to ensure that Lazy is set up correctly
-local status_ok, lazy = pcall(require, "lazy")
+local status_ok, _ = pcall(require, "lazy")
 if not status_ok then
 	return
 end
@@ -31,7 +31,6 @@ require("lazy").setup({
 			"folke/snacks.nvim",
 			priority = 1000,
 			lazy = false,
-			---@type snacks.Config
 			opts = {
 				-- your configuration comes here
 				-- or leave it empty to use the default settings
@@ -126,10 +125,46 @@ require("lazy").setup({
 			"neovim/nvim-lspconfig",
 			config = function ()
 				vim.lsp.enable("gopls")
+				vim.lsp.config('lua_ls', {
+					on_init = function(client)
+						if client.workspace_folders then
+							local path = client.workspace_folders[1].name
+							if path ~= vim.fn.stdpath('config') and (vim.uv.fs_stat(path..'/.luarc.json') or vim.uv.fs_stat(path..'/.luarc.jsonc')) then
+								return
+							end
+						end
+
+						client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+							runtime = {
+								-- Tell the language server which version of Lua you're using
+								-- (most likely LuaJIT in the case of Neovim)
+								version = 'LuaJIT'
+							},
+							-- Make the server aware of Neovim runtime files
+							workspace = {
+								checkThirdParty = false,
+								library = {
+									vim.env.VIMRUNTIME
+									-- Depending on the usage, you might want to add additional paths here.
+									-- "${3rd}/luv/library"
+									-- "${3rd}/busted/library",
+								}
+								-- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
+								-- library = vim.api.nvim_get_runtime_file("", true)
+							}
+						})
+					end,
+					settings = {
+						Lua = {}
+					}
+				})
+				vim.lsp.enable("lua_ls")
+				vim.lsp.completion.enable()
 			end,
 		},
 
-		"olimorris/codecompanion.nvim",
+		-- "github/copilot.vim",
+		--"olimorris/codecompanion.nvim",
 
 		{
 			"nvim-treesitter/nvim-treesitter",
@@ -265,6 +300,15 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' 
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
 -- autocmds
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if client:supports_method('textDocument/completion') then
+      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+    end
+  end,
+})
 
 local filetype_settings = {
 	typescript = { shiftwidth = 2, tabstop = 2 },
