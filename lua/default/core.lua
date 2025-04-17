@@ -19,3 +19,4 @@ vim.diagnostic.config({
 })
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.pumheight = 10
