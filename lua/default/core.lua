@@ -15,8 +15,10 @@ vim.opt.undodir = "/Users/oyagci/.vimundo/"
 
 vim.diagnostic.config({
 	virtual_text = false,
+})
+vim.diagnostic.config({
 	virtual_lines = true,
 })
 
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.completeopt = { "menuone", "noselect" }
 vim.opt.pumheight = 10
