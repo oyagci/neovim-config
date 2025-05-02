@@ -1,4 +1,4 @@
-vim.keymap.set("n", "<C-n>", Snacks.explorer.open)
+vim.keymap.set("n", "<C-n>", ":Neotree toggle<CR>", { desc = "Toggle Neotree" })
 
 local opts = {}
 
