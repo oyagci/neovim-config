@@ -39,3 +39,32 @@ end
 --	end,
 --	group = format_sync_grp,
 --})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = vim.api.nvim_create_augroup("TS_add_missing_imports", { clear = true }),
+	desc = "TS_add_missing_imports",
+	pattern = { "*.ts", "*.tsx" },
+	callback = function()
+		vim.lsp.buf.code_action({
+			apply = true,
+			---@diagnostic disable-next-line: missing-fields
+			context = {
+				only = {
+					---@diagnostic disable-next-line: assign-type-mismatch
+					"source.addMissingImports.ts",
+					---@diagnostic disable-next-line: assign-type-mismatch
+					"source.organizeImports.ts",
+					---@diagnostic disable-next-line: assign-type-mismatch
+					"source.removeUnusedImports.ts",
+				},
+			},
+		})
+	end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "go", "typescript", "typescriptreact", "ts", "tsx" },
+	callback = function()
+		vim.treesitter.start()
+	end,
+})

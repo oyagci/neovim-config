@@ -1,6 +1,14 @@
 return {
 	"neovim/nvim-lspconfig",
 	config = function()
+		vim.lsp.config("ts_ls", {
+			filetypes = {
+				"javascript",
+				"typescript",
+				"react",
+				"typescriptreact",
+			},
+		})
 		vim.lsp.enable("ts_ls")
 		vim.lsp.enable("yaml")
 		vim.lsp.enable("gopls")
