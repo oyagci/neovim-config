@@ -12,7 +12,7 @@ vim.keymap.set("n", "<leader>jt", ":GoAddTag<CR>")
 -- LSP
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts) -- Go to definition
 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts) -- Find references
-vim.keymap.set("n", "K", vim.lsp.buf.hover, opts) -- Show hover info
+vim.keymap.set("n", "K", vim.lsp.buf.hover, {}) -- Show hover info
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- Rename symbol
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts) -- Code actions
 
@@ -79,3 +79,5 @@ vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find f
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
+
+vim.keymap.set("n", "<leader>a", ":Lspsaga code_action<CR>", { desc = "Action" })
