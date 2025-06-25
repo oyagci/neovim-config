@@ -30,6 +30,7 @@ return {
 				"stylua",
 				"swiftlint",
 				"terraform",
+				"terraform-ls",
 				"tflint",
 				"typescript-language-server",
 				"xmlformatter",
