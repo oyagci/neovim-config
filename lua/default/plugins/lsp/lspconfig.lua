@@ -51,5 +51,12 @@ return {
 		})
 		vim.lsp.enable("lua_ls")
 		-- vim.lsp.completion.enable()
+
+		vim.lsp.config("terraform-ls", {
+			cmd = { "terraform-ls", "serve" },
+			filetypes = { "terraform", "terraform-vars" },
+			root_markers = { ".terraform", ".git" },
+		})
+		vim.lsp.enable("terraform-ls")
 	end,
 }

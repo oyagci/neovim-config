@@ -63,7 +63,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "go", "typescript", "typescriptreact", "ts", "tsx" },
+	pattern = { "go", "typescript", "typescriptreact", "ts", "tsx", "terraform" },
 	callback = function()
 		vim.treesitter.start()
 	end,
