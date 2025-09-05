@@ -10,6 +10,7 @@ vim.keymap.set("n", "<C-c>", ":nohl<CR>")
 
 vim.keymap.set("n", "<leader>jt", ":GoAddTag<CR>")
 -- LSP
+vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts) -- Go to definition
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts) -- Go to definition
 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts) -- Find references
 vim.keymap.set("n", "K", vim.lsp.buf.hover, {}) -- Show hover info

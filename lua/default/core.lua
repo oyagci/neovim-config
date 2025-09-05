@@ -22,3 +22,5 @@ vim.diagnostic.config({
 
 vim.opt.completeopt = { "menuone", "noselect" }
 vim.opt.pumheight = 10
+
+vim.treesitter.language.register("terraform", { "terraform", "terraform-vars" })
