@@ -29,6 +29,7 @@
   ] @injection.content
  (#match? @injection.content "(SELECT|select|INSERT|insert|UPDATE|update|DELETE|delete).+(FROM|from|INTO|into|VALUES|values|SET|set).*(WHERE|where|GROUP BY|group by)?")
 (#set! injection.language "sql"))
+(#set! injection.include-children)
 
 ; a general query injection
 ([
@@ -61,6 +62,7 @@
                   "NOT NULL" "PRIMARY KEY" "UPDATE SET" "TRUNCATE TABLE" "LEFT JOIN" "add constraint" "alter table" "alter column" "database" "foreign key" "group by" "having" "create index" "insert into"
                   "not null" "primary key" "update set" "truncate table" "left join")
  (#set! injection.language "sql"))
+ (#set! injection.include-children)
 
 
 ; should I use a more exhaustive list of keywords?
@@ -91,6 +93,7 @@
 	     (raw_string_literal_content) @injection.content
              (#lua-match? @injection.content "^[\n|\t| ]*\{.*\}[\n|\t| ]*$")
              (#set! injection.language "json")
+						 (#set! injection.include-children)
 	    )
   )
 )
@@ -102,6 +105,7 @@
                (raw_string_literal_content) @injection.content
                (#lua-match? @injection.content "^[\n|\t| ]*\{.*\}[\n|\t| ]*$")
                (#set! injection.language "json")
+						   (#set! injection.include-children)
              )
     )
 )
@@ -113,6 +117,7 @@
              (raw_string_literal_content) @injection.content
              (#lua-match? @injection.content "^[\n|\t| ]*\{.*\}[\n|\t| ]*$")
              (#set! injection.language "json")
+						 (#set! injection.include-children)
            )
   )
 )
