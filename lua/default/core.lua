@@ -11,7 +11,7 @@ vim.opt.sw = 2
 vim.opt.hlsearch = true
 
 vim.opt.undofile = true
-vim.opt.undodir = "/Users/oguzhan.yagci/.vimundo/"
+vim.opt.undodir = "/Users/oyagci/.vimundo/"
 
 vim.diagnostic.config({
 	virtual_text = false,
