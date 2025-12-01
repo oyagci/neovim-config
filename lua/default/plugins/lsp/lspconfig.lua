@@ -89,7 +89,19 @@ return {
 		})
 		vim.lsp.enable("lua_ls")
 		vim.lsp.enable("lua-language-server")
-		vim.lsp.enable("clangd")
+		-- vim.lsp.enable("clangd")
+		vim.lsp.config("ccls", {
+			init_options = {
+				compilationDatabaseDirectory = "build",
+				index = {
+					threads = 0,
+				},
+				cache = {
+					directory = ".ccls-cache",
+				},
+			},
+		})
+		vim.lsp.enable("ccls")
 
 		vim.lsp.config("postgrestools", {
 			cmd = { "postgrestools", "lsp-proxy" },
