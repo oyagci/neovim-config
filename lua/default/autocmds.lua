@@ -15,6 +15,7 @@ local filetype_settings = {
 	lua = { shiftwidth = 2, tabstop = 2 },
 	go = { shiftwidth = 4, tabstop = 4 },
 	c = { shiftwidth = 4, tabstop = 4 },
+	cpp = { shiftwidth = 4, tabstop = 4 },
 }
 
 local group = vim.api.nvim_create_augroup("FiletypeSettings", { clear = true })

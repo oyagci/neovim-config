@@ -14,10 +14,8 @@ vim.opt.undofile = true
 vim.opt.undodir = "/Users/oyagci/.vimundo/"
 
 vim.diagnostic.config({
-	virtual_text = false,
-})
-vim.diagnostic.config({
-	virtual_lines = true,
+	virtual_text = true,
+	virtual_lines = false,
 })
 
 vim.opt.completeopt = { "menuone", "noselect" }

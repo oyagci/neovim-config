@@ -89,19 +89,23 @@ return {
 		})
 		vim.lsp.enable("lua_ls")
 		vim.lsp.enable("lua-language-server")
-		-- vim.lsp.enable("clangd")
-		vim.lsp.config("ccls", {
+		vim.lsp.config("clangd", {
+			cmd = {
+				"clangd",
+				"--background-index",
+				"--clang-tidy",
+				"--header-insertion=iwyu",
+				"--completion-style=detailed",
+				"--function-arg-placeholders",
+			},
 			init_options = {
-				compilationDatabaseDirectory = "build",
-				index = {
-					threads = 0,
-				},
-				cache = {
-					directory = ".ccls-cache",
-				},
+				clangdFileStatus = true,
+				usePlaceholders = true,
+				completeUnimported = true,
+				semanticHighlighting = true,
 			},
 		})
-		vim.lsp.enable("ccls")
+		vim.lsp.enable("clangd")
 
 		vim.lsp.config("postgrestools", {
 			cmd = { "postgrestools", "lsp-proxy" },
