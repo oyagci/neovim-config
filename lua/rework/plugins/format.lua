@@ -7,6 +7,7 @@ return {
 		conform.setup({
 			formatters_by_ft = {
 				c = { "clang_format" },
+				cpp = { "clang_format" },
 				javascript = { "prettier" },
 				typescript = { "prettier" },
 				javascriptreact = { "prettier" },
@@ -22,11 +23,17 @@ return {
 				python = { "isort", "black" },
 				go = { "goimports", "gofmt", "gofumpt" },
 				terraform = { "terraform_fmt" },
+				glsl = {},
 			},
 			format_on_save = {
 				lsp_fallback = true,
 				async = false,
 				timeout_ms = 5000,
+			},
+			formatters = {
+				clang_format = {
+					prepend_args = { "--style=file", "--fallback-style=LLVM" },
+				},
 			},
 		})
 		vim.keymap.set({ "n", "v" }, "<leader>mp", function()

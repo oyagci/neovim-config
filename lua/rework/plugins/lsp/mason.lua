@@ -28,7 +28,6 @@ return {
 				"js-debug-adapter",
 				"prettier",
 				"stylua",
-				"swiftlint",
 				"terraform",
 				"terraform-ls",
 				"tflint",

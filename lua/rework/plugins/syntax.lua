@@ -4,5 +4,8 @@ return {
 		branch = "main",
 		lazy = false,
 		build = ":TSUpdate",
+		disable = { "glsl" },
+		ensure_installed = { "go" },
 	},
+	"sheerun/vim-polyglot",
 }

@@ -47,18 +47,32 @@ return {
 						},
 					})
 				end,
-				---settings = {
-				---	Lua = {},
-				---},
 			})
 
-			-- vim.lsp.enable("lua_ls")
-			-- vim.lsp.enable("lua-language-server")
+			vim.lsp.config("gopls", {
+				cmd = { "gopls" },
+				root_markers = { "go.mod", "go.work", ".git" },
+				settings = {
+					gopls = {
+						hints = {
+							assignVariableTypes = true,
+							compositeLiteralFields = true,
+							compositeLiteralTypes = true,
+							constantValues = true,
+							functionTypeParameters = true,
+							parameterNames = true,
+							rangeVariableTypes = true,
+						},
+					},
+				},
+			})
+
 			vim.lsp.enable({
-				"gopls",
 				"clangd",
+				"cmake",
+				"gopls",
 				"lua_ls",
-				"lua-language-server",
+				"ts_ls",
 			})
 		end,
 	},
@@ -103,8 +117,8 @@ return {
 				extend_gitsigns = true,
 				lightbulb = {
 					enable = true,
-					sign = true,
-					virtual_text = false,
+					sign = false,
+					virtual_text = true,
 				},
 			})
 		end,
